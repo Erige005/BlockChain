@@ -24,12 +24,41 @@ Chứng nhận số: Xuất file PDF chứng nhận sở hữu có giá trị th
 
 🛠️ Công nghệ sử dụng (Tech Stack)
 
-| Thành phần | Công nghệ | Vai trò |
-| Blockchain | Hardhat Network | Mạng Ethereum giả lập cục bộ (Localhost). |
-| Smart Contract | Solidity (v0.8.20) | Logic nghiệp vụ, quản lý trạng thái sở hữu. |
-| Frontend | HTML5 / Bootstrap 5 | Giao diện người dùng (Dashboard UI). |
-| Web3 Logic | Ethers.js (v6) | Thư viện kết nối Frontend với Blockchain (RPC). |
-| Backend Storage | Node.js / Express | Máy chủ lưu trữ file media (Ảnh/Video). |
+Thành phần
+
+Công nghệ
+
+Vai trò
+
+Blockchain
+
+Hardhat Network
+
+Mạng Ethereum giả lập cục bộ (Localhost).
+
+Smart Contract
+
+Solidity (v0.8.20)
+
+Logic nghiệp vụ, quản lý trạng thái sở hữu.
+
+Frontend
+
+HTML5 / Bootstrap 5
+
+Giao diện người dùng (Dashboard UI).
+
+Web3 Logic
+
+Ethers.js (v6)
+
+Thư viện kết nối Frontend với Blockchain (RPC).
+
+Backend Storage
+
+Node.js / Express
+
+Máy chủ lưu trữ file media (Ảnh/Video).
 
 🚀 Hướng dẫn Cài đặt & Chạy (Localhost)
 
@@ -55,7 +84,6 @@ npm install
 npx hardhat node
 
 
-
 ⚠️ LƯU Ý: Giữ terminal này chạy liên tục. Nó sẽ cung cấp 20 tài khoản ví thử nghiệm với 10.000 ETH.
 
 Bước 2: Khởi chạy Server Lưu trữ (Terminal 2)
@@ -65,7 +93,6 @@ cd hardhat-tutorial
 
 # Chạy server lưu trữ ảnh
 node server.js
-
 
 
 Server sẽ chạy tại http://localhost:4000.
@@ -82,7 +109,6 @@ npx hardhat run scripts/deploy.js --network localhost
 
 # 3. Chạy giao diện Web
 npx http-server .
-
 
 
 Truy cập Web tại: http://127.0.0.1:8080
@@ -139,12 +165,10 @@ Bấm vào nút "Chi tiết" để xem toàn bộ dòng thời gian giao dịch 
 
 📝 Thông tin tác giả
 
-Sinh viên: 
+Sinh viên: Nguyễn Nhật Nam  
 
-$$Tên của bạn$$
+Mã sinh viên: 23020557
 
-Mã sinh viên: 
+Lớp/Môn học: Công nghệ Blockchain
 
-$$Mã số$$
-
-Lớp/Môn học: Công
+Dự án được xây dựng với mục đích học tập và nghiên cứu.
