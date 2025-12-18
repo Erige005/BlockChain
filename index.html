@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Xác Thực Bản Quyền Số</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR (Giao diện hành chính) -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse p-3">
+            <a href="#" class="d-flex align-items-center mb-4 text-white text-decoration-none">
+                <i class="bi bi-patch-check-fill fs-3 me-2 text-primary"></i>
+                <span class="fs-5 fw-bold">Cục Bản Quyền Số</span>
+            </a>
+            <hr class="text-white-50">
+            <div class="nav flex-column nav-pills" id="menuTabs">
+                <button class="nav-link active text-start mb-2" id="tab-my-assets" data-bs-toggle="pill" data-bs-target="#my-assets-content">
+                    <i class="bi bi-folder-symlink-fill"></i> Hồ Sơ Bản Quyền
+                </button>
+                <button class="nav-link text-start mb-2" id="tab-marketplace" data-bs-toggle="pill" data-bs-target="#marketplace-content">
+                    <i class="bi bi-globe-asia-australia"></i> Cổng Dữ Liệu Công Khai
+                </button>
+                <button class="nav-link text-start mb-2" id="tab-register" data-bs-toggle="pill" data-bs-target="#register-content">
+                    <i class="bi bi-pen-fill"></i> Đăng Ký Tác Quyền
+                </button>
+                <button class="nav-link text-start mb-2" id="tab-check" data-bs-toggle="pill" data-bs-target="#check-content">
+                    <i class="bi bi-shield-lock-fill"></i> Tra Cứu Vi Phạm
+                </button>
+            </div>
+            <div class="mt-auto text-white-50 small p-2">
+                <hr>
+                &copy; 2025 Digital Rights Management System (DRMS). Blockchain Secured.
+            </div>
+        </nav>
+
+        <!-- MAIN -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 main-content">
+            <div class="content-header d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded shadow-sm">
+                <h2 id="content-title" class="m-0 text-uppercase fw-bold text-secondary">Hồ Sơ Bản Quyền</h2>
+                <button id="connectButton" class="btn btn-premium">
+                    <i class="bi bi-person-badge"></i> Xác Thực Định Danh (Ví)
+                </button>
+            </div>
+
+            <!-- ALERT ERROR -->
+            <div id="systemAlert" class="alert alert-danger d-none"></div>
+
+            <!-- THANH TRA CỨU -->
+            <div class="row mb-4" id="filterBar">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" id="searchKeyword" class="form-control" placeholder="Nhập tên tác phẩm, tác giả hoặc mã hồ sơ...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="filterType" class="form-select">
+                        <option value="all">Tất cả loại hình</option>
+                        <option value="image">Tác phẩm Ảnh</option>
+                        <option value="video">Tác phẩm Video</option>
+                        <option value="other">Tài liệu khác</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select id="sortOrder" class="form-select"><option value="newest">Mới nhất</option><option value="oldest">Cũ nhất</option></select>
+                </div>
+                <div class="col-md-2"><button class="btn btn-primary w-100" onclick="window.applyFilters()">Tra Cứu</button></div>
+            </div>
+
+            <div class="tab-content">
+                <!-- TAB 1: HỒ SƠ CỦA TÔI -->
+                <div class="tab-pane fade show active" id="my-assets-content">
+                    <div class="alert alert-light border-start border-4 border-primary">
+                        <strong>Danh mục sở hữu:</strong> Đây là các tác phẩm đã được cấp chứng nhận bản quyền kỹ thuật số dưới tên của bạn.
+                    </div>
+                    <div id="myAssetsLoading"></div>
+                    <div class="row g-4" id="myProductList"></div>
+                </div>
+
+                <!-- TAB 2: CỔNG DỮ LIỆU -->
+                <div class="tab-pane fade" id="marketplace-content">
+                    <div class="alert alert-light border-start border-4 border-success">
+                        <strong>Cổng thông tin công khai:</strong> Danh sách các tác phẩm đang được niêm yết chuyển nhượng quyền sở hữu.
+                    </div>
+                    <div id="marketLoading"></div>
+                    <div class="row g-4" id="marketProductList"></div>
+                </div>
+                
+                <!-- TAB 3: ĐĂNG KÝ -->
+                <div class="tab-pane fade" id="register-content">
+                    <div class="card p-4 border-0 shadow-sm">
+                        <h4 class="mb-4 text-primary border-bottom pb-2">Tờ Khai Đăng Ký Tác Quyền</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold text-secondary small">TÊN TÁC PHẨM</label>
+                                <input type="text" class="form-control" id="regFileName" placeholder="Nhập tên chính thức...">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold text-secondary small">CHỦ SỞ HỮU / TÁC GIẢ</label>
+                                <input type="text" class="form-control" id="regAuthorName" placeholder="Nhập tên đầy đủ...">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold text-secondary small">PHÍ TÁC QUYỀN</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="regRoyalty" value="5" min="0" max="50">
+                                <span class="input-group-text">%</span>
+                            </div>
+                            <div class="form-text">Phần trăm phí nhận được mỗi khi tác phẩm được chuyển nhượng lại trong tương lai.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold text-secondary small">MÔ TẢ PHÁP LÝ / NỘI DUNG</label>
+                            <textarea class="form-control" id="regFileDesc" rows="3" placeholder="Mô tả chi tiết về tác phẩm..."></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="fw-bold text-secondary small">TỆP ĐÍNH KÈM (BẰNG CHỨNG GỐC)</label>
+                            <input class="form-control" type="file" id="regFileInput">
+                        </div>
+                        <button id="registerButton" class="btn btn-primary w-100 py-2">
+                            <i class="bi bi-cloud-arrow-up-fill"></i> Nộp Hồ Sơ & Ghi Nhận Blockchain
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- TAB 4: TRA CỨU -->
+                <div class="tab-pane fade" id="check-content">
+                    <div class="card p-4 border-0 shadow-sm text-center">
+                        <i class="bi bi-shield-check text-success display-1 mb-3"></i>
+                        <h4>Tra Cứu & Xác Thực Vi Phạm</h4>
+                        <p class="text-muted">Tải lên một tệp bất kỳ để hệ thống đối chiếu với cơ sở dữ liệu Blockchain.</p>
+                        <div class="col-md-6 mx-auto">
+                            <input class="form-control mb-3" type="file" id="checkFileInput">
+                            <button id="checkButton" class="btn btn-warning w-100 py-2 fw-bold">
+                                <i class="bi bi-fingerprint"></i> Quét Dữ Liệu
+                            </button>
+                        </div>
+                        <div id="checkStatus" class="mt-4 text-start"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- MODAL NIÊM YẾT CHUYỂN NHƯỢNG -->
+<div class="modal fade" id="sellModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning bg-opacity-10">
+        <h5 class="modal-title text-warning-emphasis fw-bold">Niêm Yết Chuyển Nhượng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn đang thực hiện thủ tục niêm yết chuyển nhượng quyền sở hữu tác phẩm này.</p>
+        <label class="fw-bold">Phí chuyển nhượng mong muốn (ETH):</label>
+        <input type="number" id="sellPriceInput" class="form-control mt-2" placeholder="0.0">
+        <input type="hidden" id="sellHashInput">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning w-100 fw-bold" onclick="window.confirmSell()">
+            Xác Nhận Niêm Yết
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CHI TIET HỒ SƠ -->
+<div class="modal fade" id="detailModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-text-fill"></i> Hồ Sơ Chi Tiết Tác Phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <!-- COT TRAI -->
+            <div class="col-md-5">
+                <div id="detailPreview" class="mb-3 border rounded text-center bg-dark p-2 d-flex align-items-center justify-content-center" style="min-height:250px; background: #e9ecef !important;"></div>
+                
+                <button class="btn btn-outline-dark w-100 mb-3" onclick="window.downloadCertificate()">
+                    <i class="bi bi-award-fill"></i> Xuất Giấy Chứng Nhận (PDF)
+                </button>
+                
+                <div class="list-group small">
+                    <div class="list-group-item">
+                        <span class="text-muted">Tác giả gốc:</span>
+                        <div class="fw-bold text-break" id="detailAuthor"></div>
+                    </div>
+                    <div class="list-group-item">
+                        <span class="text-muted">Chủ sở hữu hiện tại (Ví):</span>
+                        <div class="fw-bold text-primary font-monospace text-break" id="detailOwner"></div>
+                    </div>
+                    <div class="list-group-item d-flex justify-content-between">
+                        <span>Phí tác quyền:</span>
+                        <span id="detailRoyalty" class="badge bg-info text-dark"></span>
+                    </div>
+                    <div class="list-group-item d-flex justify-content-between">
+                        <span>Mức độ quan tâm:</span>
+                        <span class="fw-bold text-danger"><span id="detailLikes"></span> <i class="bi bi-heart-fill"></i></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COT PHAI -->
+            <div class="col-md-7">
+                <div class="card mb-3">
+                    <div class="card-header fw-bold bg-white">Nội dung / Mô tả</div>
+                    <div class="card-body bg-light">
+                        <p id="detailDesc" class="card-text text-break"></p>
+                        <hr>
+                        <small class="text-muted">Mã Băm (Hash) Định Danh:</small>
+                        <div id="detailHash" class="font-monospace text-break small bg-white p-2 border rounded"></div>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold border-bottom pb-2 mb-3 text-secondary">Lịch sử Sở hữu & Chuyển nhượng</h6>
+                <div class="mb-4 border rounded p-0 bg-white" style="max-height: 150px; overflow-y: auto;">
+                    <ul class="list-group list-group-flush small" id="historyList"></ul>
+                </div>
+
+                <h6 class="fw-bold border-bottom pb-2 mb-3 text-secondary">Ý kiến / Ghi chú Cộng đồng</h6>
+                <div class="input-group mb-2">
+                    <input type="text" id="commentInput" class="form-control" placeholder="Nhập nội dung...">
+                    <button class="btn btn-secondary" onclick="window.postComment()">Gửi</button>
+                </div>
+                <div id="commentsList" class="border rounded p-2 bg-light" style="max-height: 200px; overflow-y: auto;"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.11.1/dist/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

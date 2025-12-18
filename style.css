@@ -1,0 +1,171 @@
+/* --- IMPORT FONT HIEN DAI (Inter) --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #0d6efd; /* Xanh Bootstrap chuan */
+    --secondary-color: #6c757d;
+    --dark-bg: #111827; /* Màu nền sidebar tối sang trọng */
+    --light-bg: #f3f4f6; /* Màu nền chính xám nhẹ */
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Đổ bóng mềm */
+    --hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-bg);
+    color: #374151;
+}
+
+/* --- SIDEBAR CHUYEN NGHIEP --- */
+.sidebar {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--dark-bg) 0%, #1f2937 100%);
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar .nav-link {
+    color: #9ca3af;
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+/* --- MAIN CONTENT AREA --- */
+.main-content {
+    padding: 30px;
+}
+
+.content-header {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-header h2 {
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+/* --- PREMIUM PRODUCT CARDS (DASHBOARD MỚI) --- */
+.product-card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    height: 100%; /* Để các thẻ bằng nhau */
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Hiệu ứng nổi lên khi di chuột */
+    box-shadow: var(--hover-shadow);
+}
+
+.card-preview-container {
+    height: 200px; /* Chiều cao cố định cho vùng ảnh/video */
+    background-color: #e5e7eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.card-preview-container img, 
+.card-preview-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh phủ kín khung mà không bị méo */
+}
+
+.product-card .card-body {
+    padding: 20px;
+}
+
+.product-card .card-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #111827;
+}
+
+.product-meta {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 5px;
+}
+
+.product-meta i {
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+.hash-truncate {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Courier New', monospace;
+    background: #f3f4f6;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+}
+
+/* --- BUTTONS & FORMS --- */
+.btn-premium {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #4f46e5 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-premium:hover {
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    border-color: var(--primary-color);
+}
+
+.card-form {
+    border: none;
+    box-shadow: var(--card-shadow);
+    border-radius: 16px;
+    padding: 20px;
+}
